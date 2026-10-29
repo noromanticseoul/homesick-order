@@ -61,6 +61,26 @@ h1 small{display:block;font-size:12.5px;font-weight:400;color:var(--sub);margin-
 .done h2{font-size:21px;font-weight:600}
 .done p{font-size:14px;color:var(--sub);margin-top:8px}
 .foot{margin-top:40px;font-size:11px;color:var(--mute);display:flex;justify-content:space-between}
+.szh{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:12.5px;color:var(--sub)}
+.szh button{border:0;background:none;font:inherit;font-size:12.5px;color:var(--sub);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:2px 0}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.chip{border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14px;font-weight:500;color:var(--ink);min-height:44px;padding:6px 4px;line-height:1.2;cursor:pointer}
+.chip small{display:block;font-size:11px;font-weight:400;color:var(--mute)}
+.chip.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.picked{margin-top:8px}
+.picked .row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:14px}
+.picked .row .step button{width:34px;height:34px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{background:#fff;width:100%;max-width:480px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.sheet .hd{display:flex;justify-content:space-between;align-items:center}
+.sheet h3{font-size:17px;font-weight:600}
+.sheet .x{border:0;background:none;font-size:24px;line-height:1;cursor:pointer;color:var(--ink);padding:4px 6px}
+.sheet h4{font-size:13px;font-weight:600;margin:18px 0 6px}
+.tbl{overflow-x:auto}
+.sheet table{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sheet th,.sheet td{border:1px solid #e6e6e6;padding:7px 6px;text-align:center}
+.sheet thead th,.sheet tbody th{background:var(--soft);font-weight:600}
+.sheet .note{font-size:12px}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -74,10 +94,10 @@ h1 small{display:block;font-size:12.5px;font-weight:400;color:var(--sub);margin-
     <div class="items">
       <div class="it"><div class="l"><div class="nm">엽서<em>Postcard</em></div><div class="pr">5,000원</div><div class="ds">이체 후 상자 속 포장된 엽서를 가져가시면 됩니다.</div></div>
         <div class="step" data-k="postcard"><button type="button" aria-label="엽서 빼기">−</button><span>0</span><button type="button" aria-label="엽서 더하기">+</button></div></div>
-      <div class="it"><div class="l"><div class="nm">PrivateClub 티셔츠<em>T-shirt</em></div><div class="pr">50,000원</div><div class="ds">11월 20일 일괄 발송</div></div>
-        <div class="step" data-k="tee"><button type="button" aria-label="티셔츠 빼기">−</button><span>0</span><button type="button" aria-label="티셔츠 더하기">+</button></div></div>
-      <div class="it"><div class="l"><div class="nm">homesick 후드티<em>Hoodie</em></div><div class="pr">99,000원</div><div class="ds">11월 20일 일괄 발송</div></div>
-        <div class="step" data-k="hoodie"><button type="button" aria-label="후드티 빼기">−</button><span>0</span><button type="button" aria-label="후드티 더하기">+</button></div></div>
+      <div class="it"><div class="l"><div class="nm">PrivateClub 티셔츠<em>T-shirt</em></div><div class="pr">50,000원</div><div class="ds">11월 20일 일괄 발송</div>
+        <div class="szh"><span>사이즈</span><button type="button" data-info="tee">사이즈 정보</button></div><div class="chips" data-k="tee"></div><div class="picked" data-k="tee"></div></div></div>
+      <div class="it"><div class="l"><div class="nm">homesick 후드티<em>Hoodie</em></div><div class="pr">99,000원</div><div class="ds">11월 20일 일괄 발송</div>
+        <div class="szh"><span>사이즈</span><button type="button" data-info="hoodie">사이즈 정보</button></div><div class="chips" data-k="hoodie"></div><div class="picked" data-k="hoodie"></div></div></div>
       <div class="it book"><div class="l"><div class="nm">책 『유작』<em>Book</em></div><div class="pr">18,200원</div><div class="ds">아래 서점에서 구매하실 수 있습니다.</div>
         <div class="shops">
           <a class="ext" href="https://bookk.co.kr/bookStore/6a7db1eeaa96398e79d25dfc" target="_blank" rel="noopener">부크크</a>
@@ -107,8 +127,6 @@ h1 small{display:block;font-size:12.5px;font-weight:400;color:var(--sub);margin-
       <div class="field"><label for="name">성함</label><input id="name" autocomplete="name" required></div>
       <div class="field"><label for="phone">연락처</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></div>
       <div class="field"><label for="address">주소</label><textarea id="address" autocomplete="street-address" required></textarea></div>
-      <div class="field" id="teeSizeF" hidden><label for="teeSize">티셔츠 사이즈</label><input id="teeSize" placeholder="여러 벌이면 각각 적어 주세요"></div>
-      <div class="field" id="hoodieSizeF" hidden><label for="hoodieSize">후드티 사이즈</label><input id="hoodieSize" placeholder="여러 벌이면 각각 적어 주세요"></div>
       <label class="agree"><input type="checkbox" id="agree">성함, 연락처, 주소를 굿즈 발송에 쓰는 데 동의합니다.</label>
       <p class="err" id="err" hidden></p>
       <button class="btn full" type="submit" id="submit" style="margin-top:16px">이체했어요, 주문 접수하기</button>
@@ -123,6 +141,11 @@ h1 small{display:block;font-size:12.5px;font-weight:400;color:var(--sub);margin-
   </section>
 </div>
 
+<div class="modal" id="szModal" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="szTitle">
+  <div class="hd"><h3 id="szTitle">사이즈 안내</h3><button class="x" type="button" id="szClose" aria-label="닫기">×</button></div>
+  <h4 id="szItem"></h4><div class="tbl"><table id="szTable"></table></div>
+  <p class="note">단위 cm. 측정 방법과 위치에 따라 1~3cm 오차가 있을 수 있습니다.</p>
+</div></div>
 <div class="bar" id="bar"><div class="in"><div class="sum">총액<b id="total">0원</b></div><button class="btn" type="button" id="toPay" disabled>결제하기</button></div></div>
 
 <script>
@@ -131,25 +154,56 @@ var PRICES={postcard:5000,tee:50000,hoodie:99000};
 var NAMES={postcard:'엽서',tee:'PrivateClub 티셔츠',hoodie:'homesick 후드티'};
 var ACCT='100232230794';
 var q={postcard:0,tee:0,hoodie:0};
+var SIZES={tee:[['S',0],['M',0],['L',0],['XL',0],['2XL',2000],['3XL',2000]],hoodie:[['S',0],['M',0],['L',0],['XL',0],['2XL',4000]]};
+var CHART={tee:{cols:['S','M','L','XL','2XL','3XL'],rows:[['총기장',69.5,72,74,77,80,82],['어깨너비',44,49,53,60,64,67.5],['가슴너비',46,50,53,60,64,70],['소매길이',16,18,18,19,21,21.5]]},
+  hoodie:{cols:['S','M','L','XL','2XL'],rows:[['총기장',63,67,71,76,81],['어깨너비',44,48,52,55,58],['가슴너비',52,55,58,63,68],['소매길이',57,60,61,62,63]]}};
+var sz={tee:{},hoodie:{}};
+function extra(k){return SIZES[k].reduce(function(a,s){return a+(sz[k][s[0]]||0)*s[1]},0)}
+function count(k){return SIZES[k].reduce(function(a,s){return a+(sz[k][s[0]]||0)},0)}
+function sizeText(k){return SIZES[k].filter(function(s){return sz[k][s[0]]}).map(function(s){return s[0]+' '+sz[k][s[0]]}).join(', ')}
 function won(n){return n.toLocaleString('ko-KR')+'원'}
-function sum(){return q.postcard*PRICES.postcard+q.tee*PRICES.tee+q.hoodie*PRICES.hoodie}
+function sum(){return q.postcard*PRICES.postcard+q.tee*PRICES.tee+q.hoodie*PRICES.hoodie+extra('tee')+extra('hoodie')}
 function $(id){return document.getElementById(id)}
 function render(){
-  document.querySelectorAll('.step').forEach(function(s){var k=s.dataset.k;s.querySelector('span').textContent=q[k];s.querySelector('button').disabled=q[k]===0});
+  ['tee','hoodie'].forEach(function(k){
+    q[k]=count(k);
+    document.querySelectorAll('.chips[data-k='+k+'] .chip').forEach(function(c){c.classList.toggle('on',!!sz[k][c.dataset.s]);c.setAttribute('aria-pressed',!!sz[k][c.dataset.s])});
+    var box=document.querySelector('.picked[data-k='+k+']');box.innerHTML='';
+    SIZES[k].forEach(function(s){var n=sz[k][s[0]];if(!n)return;
+      var r=document.createElement('div');r.className='row';
+      r.innerHTML='<span>'+s[0]+' · '+won(PRICES[k]+s[1])+'</span><div class="step"><button type="button" aria-label="'+s[0]+' 빼기">−</button><span>'+n+'</span><button type="button" aria-label="'+s[0]+' 더하기">+</button></div>';
+      var b=r.querySelectorAll('button');b[0].onclick=function(){sz[k][s[0]]--;render()};b[1].onclick=function(){if(sz[k][s[0]]<20){sz[k][s[0]]++;render()}};
+      box.appendChild(r)});
+  });
+  document.querySelectorAll('.it .step[data-k]').forEach(function(s){var k=s.dataset.k;s.querySelector('span').textContent=q[k];s.querySelector('button').disabled=q[k]===0});
   $('total').textContent=won(sum());$('toPay').disabled=sum()===0;
 }
-document.querySelectorAll('.step').forEach(function(s){
+['tee','hoodie'].forEach(function(k){
+  var box=document.querySelector('.chips[data-k='+k+']');
+  SIZES[k].forEach(function(s){var c=document.createElement('button');c.type='button';c.className='chip';c.dataset.s=s[0];
+    c.innerHTML=s[0]+(s[1]?'<small>+'+s[1].toLocaleString('ko-KR')+'</small>':'');
+    c.onclick=function(){sz[k][s[0]]=sz[k][s[0]]?0:1;render()};box.appendChild(c)});
+});
+document.querySelectorAll('[data-info]').forEach(function(b){b.onclick=function(){
+  var k=b.dataset.info,c=CHART[k];$('szItem').textContent=NAMES[k];
+  $('szTable').innerHTML='<thead><tr><th>Size</th>'+c.cols.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr></thead><tbody>'+c.rows.map(function(r){return '<tr><th>'+r[0]+'</th>'+r.slice(1).map(function(v){return '<td>'+v+'</td>'}).join('')+'</tr>'}).join('')+'</tbody>';
+  $('szModal').hidden=false;$('szClose').focus()}});
+$('szClose').onclick=function(){$('szModal').hidden=true};
+$('szModal').onclick=function(e){if(e.target===this)this.hidden=true};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('szModal').hidden=true});
+document.querySelectorAll('.it .step[data-k]').forEach(function(s){
   var b=s.querySelectorAll('button'),k=s.dataset.k;
   b[0].onclick=function(){if(q[k]>0){q[k]--;render()}};
   b[1].onclick=function(){if(q[k]<20){q[k]++;render()}};
 });
 function show(id){['pick','pay','done'].forEach(function(x){$(x).hidden=x!==id});$('bar').hidden=id!=='pick';window.scrollTo(0,0)}
 $('toPay').onclick=function(){
-  var rows='';Object.keys(q).forEach(function(k){if(q[k])rows+='<div><span>'+NAMES[k]+' × '+q[k]+'</span><span>'+won(q[k]*PRICES[k])+'</span></div>'});
+  var rows='';if(q.postcard)rows+='<div><span>엽서 × '+q.postcard+'</span><span>'+won(q.postcard*PRICES.postcard)+'</span></div>';
+  ['tee','hoodie'].forEach(function(k){SIZES[k].forEach(function(s){var n=sz[k][s[0]];if(n)rows+='<div><span>'+NAMES[k]+' '+s[0]+' × '+n+'</span><span>'+won(n*(PRICES[k]+s[1]))+'</span></div>'})});
   $('rows').innerHTML=rows;$('total2').textContent=won(sum());
   $('toss').href='supertoss://send?amount='+sum()+'&bank='+encodeURIComponent('토스뱅크')+'&accountNo='+ACCT+'&origin=qr';
   var ship=q.tee+q.hoodie>0;$('ship').hidden=!ship;$('pcNote').hidden=!q.postcard;
-  $('teeSizeF').hidden=!q.tee;$('hoodieSizeF').hidden=!q.hoodie;$('err').hidden=true;
+  $('err').hidden=true;
   show('pay');
 };
 $('toPick').onclick=function(){show('pick')};
@@ -160,11 +214,9 @@ $('copy').onclick=function(){
 };
 $('ship').onsubmit=function(e){
   e.preventDefault();
-  var d={postcard:q.postcard,tee:q.tee,hoodie:q.hoodie,name:$('name').value.trim(),phone:$('phone').value.trim(),address:$('address').value.trim(),teeSize:$('teeSize').value.trim(),hoodieSize:$('hoodieSize').value.trim()};
+  var d={postcard:q.postcard,tee:q.tee,hoodie:q.hoodie,name:$('name').value.trim(),phone:$('phone').value.trim(),address:$('address').value.trim(),teeSize:sizeText('tee'),hoodieSize:sizeText('hoodie'),teeSizes:sz.tee,hoodieSizes:sz.hoodie};
   var msg='';
   if(!d.name||!d.phone||!d.address)msg='성함, 연락처, 주소를 모두 적어 주세요.';
-  else if(q.tee&&!d.teeSize)msg='티셔츠 사이즈를 적어 주세요.';
-  else if(q.hoodie&&!d.hoodieSize)msg='후드티 사이즈를 적어 주세요.';
   else if(!$('agree').checked)msg='정보 이용에 동의해 주세요.';
   if(msg){$('err').textContent=msg;$('err').hidden=false;$('err').scrollIntoView({block:'center',behavior:'smooth'});return}
   $('submit').disabled=true;$('submit').textContent='접수하는 중…';
